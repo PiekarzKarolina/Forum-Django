@@ -1,0 +1,38 @@
+<style>
+    table, th, td {border: 1px solid black;}
+</style>
+<table>
+        <tr>
+            <td style="font-size: 150%"><b>{{ topic.title }}</b></td>
+        </tr>
+        <tr>
+            <td style="font-size: 60%">
+                {{ topic.pub_date }}<br>
+                <i>By {{ topic.user}}</i>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size: 90%;">{{ topic.topic_text }}</td>
+        </tr>
+</table>
+
+
+<table>
+<td>Comments:</td>
+    {% for comment in comments %}
+        {% if comment.topic.pk == topic.pk %}
+            <tr>
+                <td style="font-size: 80%"> {{ comment.user }} <font size="1"><i>{{ comment.pub_date }}</i></font></td>
+                <td> {{ comment.comment_text }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+
+<h4>Add comment:</h4>
+<form action="{% url 'forum:create_comment' pk=topic.pk %}" method="POST"> {% csrf_token %}
+      Text: <input type="text" name="text"><br>
+      Username: <input type="text" name="user"><br>
+      <input type="submit" value="Comment">
+</form>

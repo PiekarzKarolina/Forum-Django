@@ -1,0 +1,33 @@
+<style>
+    table, th, td {border: 1px solid black;}
+</style>
+<h1>Topics list:</h1>
+{% if topics %}
+    <table>
+        {% for topic in topics %}
+            <tr>
+                <td><a href="/forum/{{ topic.id }}/">{{ topic.title }}</a></td>
+                <td>Category: <a href="/forum/categories/{{ topic.category.id }}"> {{ topic.category.category_name }} </a></td>
+            </tr>
+        {% endfor %}
+    </table>
+<table>
+<td>Categories:</td>
+    {% for cat in categories %}
+            <tr>
+                <td style="font-size: 80%"><a href="/forum/categories/{{ cat.id }}/"> {{ cat.category_name }} </a></td>
+            </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <p>No topics are available.</p>
+{% endif %}
+
+<h4>Create new topic: </h4>
+ <form action="{% url 'forum:create_topic' %}" method="POST"> {% csrf_token %}
+      Title: <input type="text" name="title"><br>
+      Text: <input type="text" name="topic_text"><br>
+      Username: <input type="text" name="user_name"><br>
+      Category: <input type="text" name="category"><br>
+      <input type="submit" value="Create">
+ </form>

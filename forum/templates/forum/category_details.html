@@ -1,0 +1,18 @@
+<style>
+    table, th, td {border: 1px solid black;}
+</style>
+<h1>Topics list in category {{ category.category_name }}:</h1>
+{% if topics %}
+    <table>
+        {% for topic in topics %}
+            {% if topic.category.category_name == category.category_name%}
+                <tr>
+                    <td><a href="/forum/{{ topic.id }}/">{{ topic.title }}</a></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p>No topics are available.</p>
+{% endif %}
